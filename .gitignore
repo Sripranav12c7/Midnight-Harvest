@@ -1,0 +1,31 @@
+# Rojo build outputs
+*.rbxl
+*.rbxlx
+
+# Luau/Type checking
+.luau-analyze/
+*.luau.meta.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+
+# Node modules (if any)
+node_modules/
+
+# Aftman cache
+.aftman/

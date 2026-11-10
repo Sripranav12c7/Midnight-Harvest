@@ -1,0 +1,8 @@
+[toolchain]
+channel = "stable"
+
+[tools]
+selene = "latest"
+stylua = "latest"
+# luau-lsp = "latest"  # uncomment when available via aftman
+# rojo = "latest"       # rojo is typically installed separately
