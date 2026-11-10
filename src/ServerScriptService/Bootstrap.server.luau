@@ -79,6 +79,9 @@ local function initializeServices()
 	-- 12. BossService: Ready for activation
 	BossService.initialize(GameConfig, GhostConfig, CutsceneService)
 
+	-- Register services with PersistenceService for callbacks
+	PersistenceService.registerServices(EconomyService, InventoryService)
+
 	print("[Bootstrap] All services initialized")
 end
 
@@ -86,12 +89,6 @@ end
 Players.PlayerAdded:Connect(function(player)
 	-- PersistenceService handles load in PlayerAdded
 	PersistenceService.onPlayerAdded(player)
-
-	-- Wait for data load before initializing player services
-	task.spawn(function()
-		-- Data load is async; services check PersistenceService.isLoaded(player)
-		-- EconomyService/InventoryService will apply loaded data when ready
-	end)
 end)
 
 Players.PlayerRemoving:Connect(function(player)

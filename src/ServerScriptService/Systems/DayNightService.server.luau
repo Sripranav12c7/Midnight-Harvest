@@ -42,8 +42,8 @@ local function initialize(config: any, cutscene: any, ghost: any)
 	-- Start cycle (MILESTONE 4: full implementation with RunService.Heartbeat or task.spawn loop)
 	-- cycleTask = task.spawn(runCycle)
 
-	-- Expose events
-	-- _G.DayNightService = { dayChanged = dayChanged.Event, nightChanged = nightChanged.Event }
+	-- Expose events for other services (GhostService, etc.)
+	-- Events are returned from the module table below
 
 	print("[DayNightService] Skeleton initialized")
 end

@@ -18,6 +18,7 @@ local GhostService = require(script.Parent.GhostService)
 local CutsceneService = require(script.Parent.CutsceneService)
 
 local RemoteEvents = require(ReplicatedStorage.Remotes.RemoteEvents)
+local RemoteNames = require(ReplicatedStorage.Shared.Constants.RemoteNames)
 local StatNames = require(ReplicatedStorage.Shared.Constants.StatNames)
 
 -- Boss state
@@ -55,8 +56,8 @@ local function initialize(config: any, ghostConfig: any, cutscene: any)
 	-- Boss fight start remote
 	RemoteEvents.getRemoteEvent("BossFightStart").OnServerEvent:Connect(onBossFightStart)
 
-	-- BossFinalEvent bindable
-	-- RemoteEvents.getBindableEvent("BossFinalEvent").Event:Connect(onBossFinalEvent)
+	-- BossFinalEvent bindable (MILESTONE 5: connect to bindable event)
+	-- RemoteEvents.getBindableEvent(RemoteNames.Bindables.BossFinalEventBindable).Event:Connect(onBossFinalEvent)
 
 	print("[BossService] Skeleton initialized")
 end

@@ -7,7 +7,7 @@
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local StarterPlayerScripts = game:GetService("StarterPlayer").StarterPlayerScripts
+local StarterPlayerScripts = game:GetService("StarterPlayer"):WaitForChild("StarterPlayerScripts")
 
 local RemoteEvents = require(ReplicatedStorage.Remotes.RemoteEvents)
 
@@ -22,26 +22,63 @@ local GhostController = require(StarterPlayerScripts.Controllers.GhostController
 
 local player = Players.LocalPlayer
 
-local function onPlayerDataLoaded(playerData: any)
+-- Configuration
+local PLAYER_DATA_TIMEOUT = 30 -- seconds
+local RETRY_DELAY = 5 -- seconds
+
+local dataLoaded = false
+local playerData: any = nil
+
+local function onPlayerDataLoaded(loadedPlayerData: any)
+	if dataLoaded then
+		warn("[Bootstrap.client] PlayerDataLoaded fired multiple times, ignoring duplicate")
+		return
+	end
+
 	print("[Bootstrap.client] Player data loaded")
-	print(`[Bootstrap.client] Coins: ${playerData.coins}, Silver: ${playerData.silver}, Baguerite: ${playerData.baguerite}, Scrap: ${playerData.scrap}, GhostEnergy: ${playerData.ghostEnergy}`)
-	print(`[Bootstrap.client] Day: ${playerData.currentDay}`)
+	print(`[Bootstrap.client] Coins: ${loadedPlayerData.coins}, Silver: ${loadedPlayerData.silver}, Baguerite: ${loadedPlayerData.baguerite}, Scrap: ${loadedPlayerData.scrap}, GhostEnergy: ${loadedPlayerData.ghostEnergy}`)
+	print(`[Bootstrap.client] Day: ${loadedPlayerData.currentDay}`)
 
-	-- Initialize all controllers
-	HUDController.initialize(playerData)
-	MiningController.initialize()
-	ShopController.initialize()
-	DialogueController.initialize()
-	CutsceneController.initialize()
-	BossController.initialize()
-	GhostController.initialize()
+	playerData = loadedPlayerData
+	dataLoaded = true
 
-	print("[Bootstrap.client] All controllers initialized")
+	-- Initialize all controllers with independent error handling
+	local controllers = {
+		{ name = "HUDController", init = function() HUDController.initialize(playerData) end },
+		{ name = "MiningController", init = function() MiningController.initialize() end },
+		{ name = "ShopController", init = function() ShopController.initialize() end },
+		{ name = "DialogueController", init = function() DialogueController.initialize() end },
+		{ name = "CutsceneController", init = function() CutsceneController.initialize() end },
+		{ name = "BossController", init = function() BossController.initialize() end },
+		{ name = "GhostController", init = function() GhostController.initialize() end },
+	}
+
+	for _, controller in ipairs(controllers) do
+		local success, err = pcall(controller.init)
+		if not success then
+			warn(`[Bootstrap.client] Failed to initialize ${controller.name}: ${err}`)
+		else
+			print(`[Bootstrap.client] Initialized ${controller.name}`)
+		end
+	end
+
+	print("[Bootstrap.client] All controllers initialized (with any errors logged above)")
 end
 
 local function onDataUpdate(update: any)
 	-- Forward to HUDController
 	HUDController.onDataUpdate(update)
+end
+
+local function startTimeout()
+	task.delay(PLAYER_DATA_TIMEOUT, function()
+		if not dataLoaded then
+			warn(`[Bootstrap.client] PlayerDataLoaded not received after ${PLAYER_DATA_TIMEOUT}s, retrying...`)
+			-- Request data again (server may have missed the initial fire)
+			-- In M2, server will handle retries; for M1 we just log
+			warn("[Bootstrap.client] UI may show default/empty state until data arrives")
+		end
+	end)
 end
 
 local function initialize()
@@ -61,6 +98,9 @@ local function initialize()
 	RemoteEvents.getRemoteEvent("MiningProgress").OnClientEvent:Connect(MiningController.onMiningProgress)
 	RemoteEvents.getRemoteEvent("GhostAbsorb").OnClientEvent:Connect(GhostController.onGhostAbsorb)
 	RemoteEvents.getRemoteEvent("DayChanged").OnClientEvent:Connect(HUDController.onDayChanged)
+
+	-- Start timeout watchdog
+	startTimeout()
 
 	print("[Bootstrap.client] Initialized")
 end

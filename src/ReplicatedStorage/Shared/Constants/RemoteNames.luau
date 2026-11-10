@@ -27,7 +27,7 @@ export type RemoteEventName =
 
 export type RemoteFunctionName = never -- None currently
 
-export type BindableEventName = "BossFinalEvent"
+export type BindableEventName = "BossFinalEventBindable"
 
 local RemoteEvents: { [RemoteEventName]: RemoteEventName } = {
 	MineOre = "MineOre",
@@ -53,7 +53,7 @@ local RemoteEvents: { [RemoteEventName]: RemoteEventName } = {
 local RemoteFunctions: { [RemoteFunctionName]: RemoteFunctionName } = {}
 
 local BindableEvents: { [BindableEventName]: BindableEventName } = {
-	BossFinalEvent = "BossFinalEvent",
+	BossFinalEventBindable = "BossFinalEventBindable",
 }
 
 -- Helper to get RemoteEvent from ReplicatedStorage with type safety

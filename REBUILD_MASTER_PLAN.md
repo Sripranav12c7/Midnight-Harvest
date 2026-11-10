@@ -689,7 +689,56 @@ No gameplay code has been written. No files have been created in `Midnight-Harve
 
 ---
 
-## 18. NEXT STEPS
+## 18. GITHUB PERMISSION RULE (Mandatory for All Milestones)
+
+This rule applies to every milestone, repair, update, and future task in Midnight Harvest.
+
+### Git Workflow
+
+1. Always work on the designated development branch (`Scratch_Build` unless explicitly changed by the owner).
+2. You may inspect Git status, branches, history and diffs.
+3. You may create, edit and test project files.
+4. You may run local builds and tests.
+5. You may prepare a commit, but MUST NOT create it automatically.
+6. NEVER push, publish, upload, or synchronize changes to GitHub without explicit owner authorization.
+
+### Mandatory Approval Procedure
+
+After completing a task:
+
+1. Show a summary of modified, added and deleted files.
+2. Show the test and build results.
+3. Show the current branch and Git status.
+4. Show the proposed commit message.
+5. Explain whether the changes are ready to commit and push.
+6. Ask the owner:
+
+   "The changes are ready. Do you authorize me to commit and push these changes to `origin/Scratch_Build`?"
+
+7. STOP and wait for the owner's response.
+
+Only proceed with the commit and push if the owner explicitly approves.
+
+### Strict Prohibitions
+
+- Never push automatically.
+- Never commit automatically.
+- Never push directly to `main`.
+- Never force-push.
+- Never interpret general task approval as GitHub push authorization.
+- Never assume previous permission applies to future tasks.
+- Never publish the Roblox game.
+- Never modify the original `the real one.rbxl`.
+
+### Owner Control
+
+The owner has final control over all GitHub changes.
+
+A task is not permission to commit or push. Explicit authorization must be obtained separately for each push.
+
+---
+
+## 19. NEXT STEPS
 
 **Awaiting owner review of this plan.** Specifically:
 

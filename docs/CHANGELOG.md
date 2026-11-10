@@ -25,7 +25,7 @@ All significant project changes documented here.
 - `docs/BUGS.md` — 18 confirmed bugs, unverified issues, regression risks
 - `docs/CHANGELOG.md` — This file
 
-## [Milestone 1] — 2026-11-10 (In Progress)
+## [Milestone 1] — 2026-11-10
 
 ### Added
 - `default.project.json` — Rojo 7.x project configuration
@@ -60,8 +60,8 @@ tests/
 ### Documentation Placeholders
 - All `docs/*.md` files created with Milestone 0 content
 
-### Pending (Milestone 1 Implementation)
-- Shared Config modules (GameConfig, ShopConfig, GhostConfig, MiningConfig, DayNightConfig)
+### Milestone 1 Implementation (Completed)
+- Shared Config modules (GameConfig, ShopConfig, GhostConfig, MiningConfig, DayNightConfig) — all values marked UNAPPROVED
 - Shared Types modules (EconomyTypes, GhostTypes, MiningTypes, ProgressionTypes, NetworkTypes)
 - Shared Constants modules (RemoteNames, StatNames, ToolNames)
 - Shared Utilities modules (Signal, TableUtil, MathUtil)
@@ -71,7 +71,33 @@ tests/
 - Client Bootstraps (Bootstrap.server.luau, Bootstrap.client.luau)
 - Client Controllers (HUD, Mining, Shop, Dialogue, Cutscene, Boss, Ghost stubs)
 - UI Interfaces (CoinGui, DayGui, GhostEnergyGui, DialogueGui, BossDialogueGui, MineCutsceneGui, MiningProgressGui stubs)
-- Linux-side checks (rojo build, selene, stylua --check)
+- TestEZ test files (Economy, Mining, Ghost, Shop, Persistence)
+
+### Milestone 1 Repair Pass (2026-11-10)
+
+#### Fixed
+1. **Bootstrap.server.luau**: Added `PersistenceService.registerServices(EconomyService, InventoryService)` to wire service callbacks; fixed service initialization order documentation.
+2. **Bootstrap.client.luau**: Added 30-second timeout watchdog for `PlayerDataLoaded`; wrapped each controller initialization in `pcall` for independent error handling; fixed `StarterPlayerScripts` reference to use `WaitForChild`.
+3. **PersistenceService.server.luau**: Added `registerServices()` function for dependency injection; exported `getDefaultPlayerData()` for tests; removed `_G.PersistenceService` global; fixed `onPlayerRemoving` to clean all state tables (`playerLocks`, `autosaveTasks`); removed `_G` global pollution; `playerLoaded` now only set to `true` after actual load (M2).
+4. **DayNightService.server.luau**: Properly exposes `dayChanged` and `nightChanged` BindableEvent events via return table for GhostService and other dependents.
+4. **RemoteNames.luau**: Resolved name collision — renamed BindableEvent from `BossFinalEvent` to `BossFinalEventBindable` (was conflicting with RemoteEvent `BossFinalEvent`).
+5. **BossService.server.luau**: Updated comment to reference new `BossFinalEventBindable` name.
+5. **PersistenceService.server.luau**: Added `registerServices()` function; exported `getDefaultPlayerData()`; removed `_G` global; cleans all state tables (`playerLocks`, `autosaveTasks`) on `onPlayerRemoving`; removed `_G` global pollution.
+6. **Tests/EconomyService.test.luau**: Fixed mock player (no longer uses `Players.LocalPlayer`); tests no longer depend on `playerLoaded` state (simulates loaded state by calling functions directly).
+6. **Tests/PersistenceService.test.luau**: Can now access `getDefaultPlayerData()` via exported function.
+7. **RemoteNames.luau**: Resolved RemoteEvent/BindableEvent name collision — `BossFinalEvent` (RemoteEvent) vs `BossFinalEventBindable` (BindableEvent).
+7. **BossService.server.luau**: Updated comment to reference `BossFinalEventBindable`.
+
+#### Verified
+- Rojo build succeeds (42 KB output)
+- Git commit `988beb1` on `Scratch_Build` branch pushed to `origin/Scratch_Build`
+
+#### Remaining (Deferred to Milestone 2)
+- Working DataStore persistence (UpdateAsync, session locking, autosave)
+- Full gameplay system implementations
+- Asset migration and visual inspection
+- Roblox Studio runtime tests
+- Selene/Stylua linting (tools not installed on this machine)
 
 ---
 

@@ -33,7 +33,7 @@ local playerLocks: { [Player]: { ownerJobId: string, expiresAt: number } } = {}
 local playerLoaded: { [Player]: boolean } = {}
 local autosaveTasks: { [Player]: thread } = {}
 
--- References to other services (set during initialization)
+-- References to other services (set via registerServices)
 local EconomyService: any = nil
 local InventoryService: any = nil
 
@@ -112,6 +112,11 @@ end
 -- Skeleton Implementation (Stubs for Milestone 1)
 -- ============================================
 
+local function registerServices(economy: any, inventory: any)
+	EconomyService = economy
+	InventoryService = inventory
+end
+
 local function initialize(config: any)
 	print("[PersistenceService] Initializing (SKELETON)...")
 
@@ -141,11 +146,11 @@ local function onPlayerAdded(player: Player)
 	--     return
 	-- end
 
-	-- Notify other services
+	-- Notify other services (will be set to true after actual load in M2)
 	if EconomyService then EconomyService.setPersistenceLoaded(player, true) end
 	if InventoryService then InventoryService.setPersistenceLoaded(player, true) end
 
-	-- Fire PlayerDataLoaded event
+	-- Fire PlayerDataLoaded event with default data (M2: fire again with real data after load)
 	task.spawn(function()
 		local RemoteEvents = require(ReplicatedStorage.Remotes.RemoteEvents)
 		RemoteEvents.getRemoteEvent("PlayerDataLoaded"):FireClient(player, defaultData)
@@ -157,8 +162,14 @@ local function onPlayerRemoving(player: Player)
 	-- savePlayerData(player)
 	-- releaseLock(player)
 
+	-- Clean all player-related state
 	playerData[player] = nil
+	playerLocks[player] = nil
 	playerLoaded[player] = nil
+	if autosaveTasks[player] then
+		task.cancel(autosaveTasks[player])
+		autosaveTasks[player] = nil
+	end
 end
 
 local function getDefaultPlayerData(): EconomyTypes.PlayerData
@@ -214,23 +225,16 @@ local function initialize(config: any)
 	print("[PersistenceService] Skeleton initialized")
 end
 
--- Expose for other services
-_G.PersistenceService = {
-	initialize = initialize,
-	load = load,
-	save = save,
-	isLoaded = isLoaded,
-	getPlayerData = getPlayerData,
-	onBindToClose = onBindToClose,
-	heartbeat = heartbeat,
-}
-
 return {
 	initialize = initialize,
+	registerServices = registerServices,
 	load = load,
 	save = save,
 	isLoaded = isLoaded,
 	getPlayerData = getPlayerData,
+	getDefaultPlayerData = getDefaultPlayerData,
 	onBindToClose = onBindToClose,
 	heartbeat = heartbeat,
+	onPlayerAdded = onPlayerAdded,
+	onPlayerRemoving = onPlayerRemoving,
 }
