@@ -18,19 +18,6 @@ local fadeFrame: Frame?
 local healthBar: Frame?
 local bossNameLabel: TextLabel?
 
-local function initialize()
-	print("[BossController] Initializing (SKELETON)...")
-
-	-- MILESTONE 5: Find BossDialogueGui from StarterGui/Interfaces
-	-- dialogueBox = PlayerGui:WaitForChild("BossDialogueGui"):WaitForChild("DialogueBox")
-	-- dialogueText = dialogueBox:WaitForChild("DialogueText")
-	-- fadeFrame = PlayerGui:WaitForChild("BossDialogueGui"):WaitForChild("FadeFrame")
-
-	RemoteEvents.getRemoteEvent("BossDialogueEvent").OnClientEvent:Connect(onBossDialogue)
-
-	print("[BossController] Skeleton initialized")
-end
-
 local function onBossDialogue()
 	-- MILESTONE 5: Boss dialogue sequence (4 lines + fade)
 	-- Similar to original Typewriter script
@@ -42,6 +29,19 @@ end
 
 local function hideHealthBar()
 	-- MILESTONE 5: Hide health bar
+end
+
+local function initialize()
+	print("[BossController] Initializing (SKELETON)...")
+
+	-- MILESTONE 5: Find BossDialogueGui from StarterGui/Interfaces
+	-- dialogueBox = PlayerGui:WaitForChild("BossDialogueGui"):WaitForChild("DialogueBox")
+	-- dialogueText = dialogueBox:WaitForChild("DialogueText")
+	-- fadeFrame = PlayerGui:WaitForChild("BossDialogueGui"):WaitForChild("FadeFrame")
+
+	RemoteEvents.getRemoteEvent("BossDialogueEvent").OnClientEvent:Connect(onBossDialogue)
+
+	print("[BossController] Skeleton initialized")
 end
 
 return {

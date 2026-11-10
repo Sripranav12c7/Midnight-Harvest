@@ -21,16 +21,6 @@ local originalCameraType = Enum.CameraType.Custom
 local originalCameraCFrame = CFrame.new()
 local inputConnections: { RBXScriptConnection } = {}
 
-local function initialize()
-	print("[CutsceneController] Initializing (SKELETON)...")
-
-	RemoteEvents.getRemoteEvent("AliceCutsceneEvent").OnClientEvent:Connect(onAliceCutscene)
-	RemoteEvents.getRemoteEvent("AliceRevealEvent").OnClientEvent:Connect(onAliceReveal)
-	RemoteEvents.getRemoteEvent("MineCutsceneEvent").OnClientEvent:Connect(onMineCutscene)
-
-	print("[CutsceneController] Skeleton initialized")
-end
-
 local function onAliceCutscene()
 	-- MILESTONE 4: Alice cutscene sequence
 	-- 1. Lock input
@@ -50,23 +40,6 @@ local function onMineCutscene()
 	-- Missing AliceCutsceneFinished remote in original
 	-- Option A: Create remote, implement full sequence
 	-- Option B: Redesign trigger
-end
-
-local function startCutscene()
-	isInCutscene = true
-	originalCameraType = camera.CameraType
-	originalCameraCFrame = camera.CFrame
-	camera.CameraType = Enum.CameraType.Scriptable
-
-	-- Lock input
-	lockInput()
-end
-
-local function endCutscene()
-	isInCutscene = false
-	camera.CameraType = originalCameraType
-	camera.CFrame = originalCameraCFrame
-	unlockInput()
 end
 
 local function lockInput()
@@ -93,8 +66,38 @@ local function typewriter(textLabel: TextLabel, text: string, speed: number)
 	-- MILESTONE 4: Typewriter animation
 end
 
+local function startCutscene()
+	isInCutscene = true
+	originalCameraType = camera.CameraType
+	originalCameraCFrame = camera.CFrame
+	camera.CameraType = Enum.CameraType.Scriptable
+
+	-- Lock input
+	lockInput()
+end
+
+local function endCutscene()
+	isInCutscene = false
+	camera.CameraType = originalCameraType
+	camera.CFrame = originalCameraCFrame
+	unlockInput()
+end
+
+local function initialize()
+	print("[CutsceneController] Initializing (SKELETON)...")
+
+	RemoteEvents.getRemoteEvent("AliceCutsceneEvent").OnClientEvent:Connect(onAliceCutscene)
+	RemoteEvents.getRemoteEvent("AliceRevealEvent").OnClientEvent:Connect(onAliceReveal)
+	RemoteEvents.getRemoteEvent("MineCutsceneEvent").OnClientEvent:Connect(onMineCutscene)
+
+	print("[CutsceneController] Skeleton initialized")
+end
+
 return {
 	initialize = initialize,
 	startCutscene = startCutscene,
 	endCutscene = endCutscene,
+	onAliceCutscene = onAliceCutscene,
+	onAliceReveal = onAliceReveal,
+	onMineCutscene = onMineCutscene,
 }

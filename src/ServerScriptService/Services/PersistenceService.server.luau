@@ -117,19 +117,26 @@ local function registerServices(economy: any, inventory: any)
 	InventoryService = inventory
 end
 
-local function initialize(config: any)
-	print("[PersistenceService] Initializing (SKELETON)...")
-
-	-- TODO: Initialize DataStores
-	-- playerDataStore = DataStoreService:GetDataStore(DATASTORE_NAME)
-	-- lockDataStore = DataStoreService:GetDataStore(DATASTORE_NAME .. "_locks")
-
-	Players.PlayerAdded:Connect(onPlayerAdded)
-	Players.PlayerRemoving:Connect(onPlayerRemoving)
-
-	print("[PersistenceService] Skeleton initialized")
+-- Default player data factory (must be before onPlayerAdded)
+local function getDefaultPlayerData(): EconomyTypes.PlayerData
+	return {
+		coins = 500,
+		silver = 0,
+		baguerite = 0,
+		scrap = 0,
+		ghostEnergy = 0,
+		ownedTools = {},
+		equippedTool = nil,
+		purchasedAttributes = {},
+		currentDay = 1,
+		storyFlags = {},
+		questProgress = {},
+		schemaVersion = 1,
+		lastSaved = os.time(),
+	}
 end
 
+-- Forward declarations for player lifecycle handlers (must be before initialize)
 local function onPlayerAdded(player: Player)
 	-- MILESTONE 1: Stub - just create default data
 	local defaultData = getDefaultPlayerData()
@@ -172,24 +179,6 @@ local function onPlayerRemoving(player: Player)
 	end
 end
 
-local function getDefaultPlayerData(): EconomyTypes.PlayerData
-	return {
-		coins = 500,
-		silver = 0,
-		baguerite = 0,
-		scrap = 0,
-		ghostEnergy = 0,
-		ownedTools = {},
-		equippedTool = nil,
-		purchasedAttributes = {},
-		currentDay = 1,
-		storyFlags = {},
-		questProgress = {},
-		schemaVersion = 1,
-		lastSaved = os.time(),
-	}
-end
-
 -- MILESTONE 2: loadPlayerData, savePlayerData, acquireLock, releaseLock, renewLock, etc.
 
 local function load(player: Player): (boolean, EconomyTypes.PlayerData?)
@@ -222,6 +211,15 @@ local function heartbeat()
 end
 
 local function initialize(config: any)
+	print("[PersistenceService] Initializing (SKELETON)...")
+
+	-- TODO: Initialize DataStores
+	-- playerDataStore = DataStoreService:GetDataStore(DATASTORE_NAME)
+	-- lockDataStore = DataStoreService:GetDataStore(DATASTORE_NAME .. "_locks")
+
+	Players.PlayerAdded:Connect(onPlayerAdded)
+	Players.PlayerRemoving:Connect(onPlayerRemoving)
+
 	print("[PersistenceService] Skeleton initialized")
 end
 

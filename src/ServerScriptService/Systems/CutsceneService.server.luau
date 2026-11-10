@@ -15,6 +15,21 @@ local RemoteEvents = require(ReplicatedStorage.Remotes.RemoteEvents)
 local activeCutscene: string? = nil
 local cutsceneQueue: { string } = {}
 
+-- Forward declarations for callbacks (must be before initialize)
+local function onMineCutsceneFinished(player: Player)
+	-- MILESTONE 4: Mine cutscene complete
+end
+
+local function startAliceCutscene()
+	-- MILESTONE 4: Fire AliceCutsceneEvent, then AliceRevealEvent after spawn
+end
+
+local function startMineCutscene()
+	-- MILESTONE 4: Design UNRESOLVED — missing AliceCutsceneFinished remote
+	-- Option A: Create the remote and implement full sequence
+	-- Option B: Redesign trigger (e.g., day 20 after Alice, same CurrentDay signal)
+end
+
 local function initialize(config: any)
 	print("[CutsceneService] Initializing (SKELETON)...")
 
@@ -38,20 +53,6 @@ local function initialize(config: any)
 	RemoteEvents.getRemoteEvent("MineCutsceneFinished").OnServerEvent:Connect(onMineCutsceneFinished)
 
 	print("[CutsceneService] Skeleton initialized")
-end
-
-local function startAliceCutscene()
-	-- MILESTONE 4: Fire AliceCutsceneEvent, then AliceRevealEvent after spawn
-end
-
-local function startMineCutscene()
-	-- MILESTONE 4: Design UNRESOLVED — missing AliceCutsceneFinished remote
-	-- Option A: Create the remote and implement full sequence
-	-- Option B: Redesign trigger (e.g., day 20 after Alice, same CurrentDay signal)
-end
-
-local function onMineCutsceneFinished(player: Player)
-	-- MILESTONE 4: Mine cutscene complete
 end
 
 return {

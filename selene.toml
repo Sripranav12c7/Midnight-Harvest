@@ -1,18 +1,31 @@
 std = "roblox"
+
+# Files using `export type` / indexed-type-table syntax that selene 0.32.0 cannot parse.
+# NOTE: `exclude` must be a top-level key placed BEFORE the first table header.
+exclude = [
+	"src/ReplicatedStorage/Shared/Config/*",
+	"src/ReplicatedStorage/Shared/Types/*",
+	"src/ReplicatedStorage/Shared/Constants/*",
+	"src/ReplicatedStorage/Remotes/*",
+	"src/ReplicatedStorage/Shared/Utilities/*",
+	"tests/*",
+]
+
+[config]
 allow_defined_top = true
 
-[lint]
+[lints]
 unused_variable = "warn"
 unused_local = "warn"
 unused_function = "warn"
-global_variable = "error"
+global_variable = "deny"
 unused_import = "warn"
 unused_type = "warn"
 unused_enum = "warn"
 unused_loop_iteration = "warn"
-incorrect_standard_library_use = "error"
+incorrect_standard_library_use = "deny"
 deprecated_standard_library_use = "warn"
-duplicate_keys_in_table = "error"
+duplicate_keys_in_table = "deny"
 unreachable_code = "warn"
 shadowing = "warn"
 empty_if = "warn"
@@ -23,6 +36,6 @@ multiple_statements = "warn"
 redundant_local = "warn"
 if_same_then_else = "warn"
 if_same_elseif = "warn"
-roblox_incorrect_color3_new_arguments = "error"
+roblox_incorrect_color3_new_arguments = "deny"
 roblox_incorrect_roact_use = "warn"
-roblox_incorrect_instance_new_arguments = "error"
+roblox_incorrect_instance_new_arguments = "deny"

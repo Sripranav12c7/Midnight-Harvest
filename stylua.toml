@@ -2,15 +2,6 @@ column_width = 120
 indent_type = "Tabs"
 indent_width = 1
 quote_style = "AutoPreferDouble"
-call_parentheses = true
-collapse_simple_statement = "Always"
-trailing_table_separator = "Always"
-space_before_function_parentheses = true
-respect_ignore = true
-
-ignore = [
-	"**/node_modules/**",
-	".luau-analyze/**",
-	"*.rbxl",
-	"*.rbxlx"
-]
+call_parentheses = "Always"
+collapse_simple_statement = "Input"
+space_after_function_names = "Never"

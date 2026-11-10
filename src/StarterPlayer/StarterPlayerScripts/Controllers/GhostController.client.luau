@@ -11,18 +11,7 @@ local TweenService = game:GetService("TweenService")
 
 local RemoteEvents = require(ReplicatedStorage.Remotes.RemoteEvents)
 
-local function initialize()
-	print("[GhostController] Initializing (SKELETON)...")
-
-	RemoteEvents.getRemoteEvent("GhostAbsorb").OnClientEvent:Connect(onGhostAbsorb)
-
-	-- MILESTONE 3: Listen for ghost spawn/despawn
-	-- GhostService.ghostSpawned:Connect(onGhostSpawned)
-	-- GhostService.ghostDespawned:Connect(onGhostDespawned)
-
-	print("[GhostController] Skeleton initialized")
-end
-
+-- Forward declarations for callbacks (must be before initialize)
 local function onGhostAbsorb(data: any)
 	-- MILESTONE 3: Visual feedback for ghost absorption
 	-- Purple highlight, particle effect, sound
@@ -34,6 +23,18 @@ end
 
 local function onGhostDespawned(ghost: Model)
 	-- MILESTONE 3: Cleanup effects
+end
+
+local function initialize()
+	print("[GhostController] Initializing (SKELETON)...")
+
+	RemoteEvents.getRemoteEvent("GhostAbsorb").OnClientEvent:Connect(onGhostAbsorb)
+
+	-- MILESTONE 3: Listen for ghost spawn/despawn
+	-- GhostService.ghostSpawned:Connect(onGhostSpawned)
+	-- GhostService.ghostDespawned:Connect(onGhostDespawned)
+
+	print("[GhostController] Skeleton initialized")
 end
 
 return {

@@ -24,6 +24,24 @@ export type ScrapRuntimeData = {
 local scrapStates: { [Model]: ScrapRuntimeData } = {}
 local currentDay = 1
 
+local function onScrapCollect(player: Player, scrap: Model)
+	-- MILESTONE 2: Validate and grant scrap
+end
+
+local function onScrapSell(player: Player)
+	-- MILESTONE 2: Sell all scrap for coins
+end
+
+local function onDayChanged(newDay: number)
+	currentDay = newDay
+	-- Respawn all collected scrap
+	for _, state in pairs(scrapStates) do
+		if next(state.collectedBy) then
+			-- Respawn logic
+		end
+	end
+end
+
 local function initialize(config: any, economy: any)
 	print("[ScrapService] Initializing (SKELETON)...")
 
@@ -42,24 +60,6 @@ local function initialize(config: any, economy: any)
 	RemoteEvents.getRemoteEvent("ScrapSell").OnServerEvent:Connect(onScrapSell)
 
 	print("[ScrapService] Skeleton initialized")
-end
-
-local function onScrapCollect(player: Player, scrap: Model)
-	-- MILESTONE 2: Validate and grant scrap
-end
-
-local function onScrapSell(player: Player)
-	-- MILESTONE 2: Sell all scrap for coins
-end
-
-local function onDayChanged(newDay: number)
-	currentDay = newDay
-	-- Respawn all collected scrap
-	for _, state in pairs(scrapStates) do
-		if next(state.collectedBy) then
-			-- Respawn logic
-		end
-	end
 end
 
 return {

@@ -1,0 +1,8 @@
+# Ignore type definition files with export syntax that stylua 2.6.0 can't parse
+src/ReplicatedStorage/Shared/Config/*.luau
+src/ReplicatedStorage/Shared/Types/*.luau
+src/ReplicatedStorage/Shared/Constants/*.luau
+src/ReplicatedStorage/Remotes/*.luau
+src/ReplicatedStorage/Shared/Utilities/Signal.luau
+src/ReplicatedStorage/Shared/Utilities/TableUtil.luau
+src/ReplicatedStorage/Shared/Utilities/MathUtil.luau

@@ -27,6 +27,29 @@ local bossBattleActive = false
 local bossDefeated = false
 local bossModel: Model? = nil
 
+local function onEnergyTransfer(player: Player, amount: number)
+	-- MILESTONE 5: Validate amount, transfer from player.GhostEnergy to bossEnergy
+	-- Fire BossFinalEvent when bossEnergy >= bossEnergyRequired
+end
+
+local function onBossFightStart(player: Player)
+	-- MILESTONE 5: Validate bossEnergy >= required, boss exists, not already active
+	-- Start fight state machine: Idle -> Dialogue -> Active -> Defeated
+	-- Play BossBattleBGM
+end
+
+local function onBossFinalEvent()
+	-- MILESTONE 5: Fire BossDialogueEvent, then enable BossFightStart
+end
+
+local function startBossFight()
+	-- MILESTONE 5: Boss AI (chase, attack, health pool), defeat condition, BGM, cleanup
+end
+
+local function defeatBoss()
+	-- MILESTONE 5: Stop BGM, reset bossBattleActive, fire victory event
+end
+
 local function initialize(config: any, ghostConfig: any, cutscene: any)
 	print("[BossService] Initializing (SKELETON)...")
 
@@ -60,29 +83,6 @@ local function initialize(config: any, ghostConfig: any, cutscene: any)
 	-- RemoteEvents.getBindableEvent(RemoteNames.Bindables.BossFinalEventBindable).Event:Connect(onBossFinalEvent)
 
 	print("[BossService] Skeleton initialized")
-end
-
-local function onEnergyTransfer(player: Player, amount: number)
-	-- MILESTONE 5: Validate amount, transfer from player.GhostEnergy to bossEnergy
-	-- Fire BossFinalEvent when bossEnergy >= bossEnergyRequired
-end
-
-local function onBossFightStart(player: Player)
-	-- MILESTONE 5: Validate bossEnergy >= required, boss exists, not already active
-	-- Start fight state machine: Idle -> Dialogue -> Active -> Defeated
-	-- Play BossBattleBGM
-end
-
-local function onBossFinalEvent()
-	-- MILESTONE 5: Fire BossDialogueEvent, then enable BossFightStart
-end
-
-local function startBossFight()
-	-- MILESTONE 5: Boss AI (chase, attack, health pool), defeat condition, BGM, cleanup
-end
-
-local function defeatBoss()
-	-- MILESTONE 5: Stop BGM, reset bossBattleActive, fire victory event
 end
 
 return {

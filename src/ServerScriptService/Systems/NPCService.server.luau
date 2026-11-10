@@ -23,6 +23,14 @@ export type NPCData = {
 
 local npcs: { [string]: NPCData } = {}
 
+local function onDialogueStart(player: Player, npcId: string)
+	-- Client requests dialogue (for UI sync)
+end
+
+local function onNPCTalk(player: Player, npcId: string)
+	-- MILESTONE 4: Show dialogue with typewriter effect
+end
+
 local function initialize(config: any)
 	print("[NPCService] Initializing (SKELETON)...")
 
@@ -33,14 +41,6 @@ local function initialize(config: any)
 	RemoteEvents.getRemoteEvent("DialogueStart").OnServerEvent:Connect(onDialogueStart)
 
 	print("[NPCService] Skeleton initialized")
-end
-
-local function onNPCTalk(player: Player, npcId: string)
-	-- MILESTONE 4: Show dialogue with typewriter effect
-end
-
-local function onDialogueStart(player: Player, npcId: string)
-	-- Client requests dialogue (for UI sync)
 end
 
 return {

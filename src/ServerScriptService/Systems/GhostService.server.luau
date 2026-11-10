@@ -31,6 +31,20 @@ export type GhostRuntimeData = {
 local ghostPopulation: { [Model]: GhostRuntimeData } = {}
 local ghostTemplates: { Ghost: Model, DeepGhost: Model } = {}
 
+-- Forward declarations for callbacks (must be before initialize)
+local function onGhostAbsorb(player: Player, ghost: Model)
+	-- MILESTONE 3: Validate tool (GhostVacuum), grant energy, destroy ghost
+end
+
+local function spawnGhost(ghostType: "Ghost" | "DeepGhost", position: CFrame?)
+	-- MILESTONE 3: Clone template, position, setup AI/damage/absorption
+end
+
+local function onDayChanged(newDay: number, isNight: boolean)
+	-- MILESTONE 3: Toggle visibility, respawn if needed
+	-- RESPAWN BEHAVIOR UNRESOLVED: restore 26+3 or 23+2?
+end
+
 local function initialize(config: any, dayNight: any)
 	print("[GhostService] Initializing (SKELETON)...")
 
@@ -49,19 +63,6 @@ local function initialize(config: any, dayNight: any)
 	RemoteEvents.getRemoteEvent("GhostAbsorb").OnServerEvent:Connect(onGhostAbsorb)
 
 	print("[GhostService] Skeleton initialized")
-end
-
-local function spawnGhost(ghostType: "Ghost" | "DeepGhost", position: CFrame?)
-	-- MILESTONE 3: Clone template, position, setup AI/damage/absorption
-end
-
-local function onGhostAbsorb(player: Player, ghost: Model)
-	-- MILESTONE 3: Validate tool (GhostVacuum), grant energy, destroy ghost
-end
-
-local function onDayChanged(newDay: number, isNight: boolean)
-	-- MILESTONE 3: Toggle visibility, respawn if needed
-	-- RESPAWN BEHAVIOR UNRESOLVED: restore 26+3 or 23+2?
 end
 
 return {

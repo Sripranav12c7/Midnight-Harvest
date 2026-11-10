@@ -18,17 +18,14 @@ local dialogueFrame: Frame?
 local dialogueText: TextLabel?
 local npcNameLabel: TextLabel?
 
-local function initialize()
-	print("[DialogueController] Initializing (SKELETON)...")
-
-	-- MILESTONE 4: Find/create DialogueGui from StarterGui/Interfaces
-	-- dialogueFrame = PlayerGui:WaitForChild("DialogueGui"):WaitForChild("DialogueFrame")
-	-- dialogueText = dialogueFrame:WaitForChild("DialogueText")
-	-- npcNameLabel = dialogueFrame:WaitForChild("NPCName")
-
-	RemoteEvents.getRemoteEvent("DialogueStart").OnClientEvent:Connect(onDialogueStart)
-
-	print("[DialogueController] Skeleton initialized")
+-- Forward declarations for callbacks (must be before initialize)
+local function typewriter(text: string, speed: number)
+	-- MILESTONE 4: Typewriter animation
+	-- dialogueText.Text = ""
+	-- for i = 1, #text do
+	--     dialogueText.Text = string.sub(text, 1, i)
+	--     task.wait(speed)
+	-- end
 end
 
 local function onDialogueStart(data: any)
@@ -42,13 +39,17 @@ local function onDialogueStart(data: any)
 	-- dialogueFrame.Visible = false
 end
 
-local function typewriter(text: string, speed: number)
-	-- MILESTONE 4: Typewriter animation
-	-- dialogueText.Text = ""
-	-- for i = 1, #text do
-	--     dialogueText.Text = string.sub(text, 1, i)
-	--     task.wait(speed)
-	-- end
+local function initialize()
+	print("[DialogueController] Initializing (SKELETON)...")
+
+	-- MILESTONE 4: Find/create DialogueGui from StarterGui/Interfaces
+	-- dialogueFrame = PlayerGui:WaitForChild("DialogueGui"):WaitForChild("DialogueFrame")
+	-- dialogueText = dialogueFrame:WaitForChild("DialogueText")
+	-- npcNameLabel = dialogueFrame:WaitForChild("NPCName")
+
+	RemoteEvents.getRemoteEvent("DialogueStart").OnClientEvent:Connect(onDialogueStart)
+
+	print("[DialogueController] Skeleton initialized")
 end
 
 return {

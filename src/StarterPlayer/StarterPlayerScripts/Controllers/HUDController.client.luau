@@ -21,24 +21,6 @@ local dayText: TextLabel?
 
 local STAT_NAMES = StatNames.Names
 
-local function initialize(playerData: any)
-	print("[HUDController] Initializing...")
-
-	-- MILESTONE 7: Create/find UI elements from StarterGui/Interfaces
-	-- coinText = PlayerGui:WaitForChild("CoinGui"):WaitForChild("CoinText")
-	-- silverText = PlayerGui:WaitForChild("CoinGui"):WaitForChild("SilverText")
-	-- bagueriteText = PlayerGui:WaitForChild("CoinGui"):WaitForChild("SilverText"):WaitForChild("BagueriteText")
-	-- scrapText = PlayerGui:WaitForChild("CoinGui"):WaitForChild("LootText") -- or separate
-	-- ghostEnergyText = PlayerGui:WaitForChild("GhostEnergyGui"):WaitForChild("GhostEnergyText")
-	-- bagText = PlayerGui:WaitForChild("CoinGui"):WaitForChild("LootText")
-	-- dayText = PlayerGui:WaitForChild("DayGui"):WaitForChild("DayLabel")
-
-	-- Initial update
-	updateFromPlayerData(playerData)
-
-	print("[HUDController] Initialized")
-end
-
 local function updateFromPlayerData(data: any)
 	if not data then return end
 
@@ -68,6 +50,24 @@ end
 local function onDayChanged(day: number, isNight: boolean)
 	-- MILESTONE 7: Update day display
 	-- if dayText then dayText.Text = `Day {day}` end
+end
+
+local function initialize(playerData: any)
+	print("[HUDController] Initializing...")
+
+	-- MILESTONE 7: Create/find UI elements from StarterGui/Interfaces
+	-- coinText = PlayerGui:WaitForChild("CoinGui"):WaitForChild("CoinText")
+	-- silverText = PlayerGui:WaitForChild("CoinGui"):WaitForChild("SilverText")
+	-- bagueriteText = PlayerGui:WaitForChild("CoinGui"):WaitForChild("SilverText"):WaitForChild("BagueriteText")
+	-- scrapText = PlayerGui:WaitForChild("CoinGui"):WaitForChild("LootText") -- or separate
+	-- ghostEnergyText = PlayerGui:WaitForChild("GhostEnergyGui"):WaitForChild("GhostEnergyText")
+	-- bagText = PlayerGui:WaitForChild("CoinGui"):WaitForChild("LootText")
+	-- dayText = PlayerGui:WaitForChild("DayGui"):WaitForChild("DayLabel")
+
+	-- Initial update
+	updateFromPlayerData(playerData)
+
+	print("[HUDController] Initialized")
 end
 
 return {
